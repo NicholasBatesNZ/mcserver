@@ -2,7 +2,7 @@
 
 `py prepare_server.py {VERSION}`
 
-2. Make sure everything is kosher and optionally drop in world file and/or run server once for paper to generate the things (if you don't now it will slow down every subsequent run)
+2. cd into the generated folder, make sure everything is kosher and optionally drop in world file and/or run server once for paper to generate the things (if you don't now it will slow down every subsequent run)
 
 3. Build Docker image
 
@@ -10,7 +10,7 @@
 
 4. Optionally test locally
 
-`sudo docker run -p 25565:25565 -e MAX_HEAP={MEMORY} mcserver`
+`sudo docker run -p 25565:25565 -e MAX_HEAP={MEMORY} mcserver:{TAG}`
 
 5. Tag image again (idk man I'm just following aws docs)
 

@@ -1,2 +1,3 @@
 tmp_*
 .venv
+__pycache__
