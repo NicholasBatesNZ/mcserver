@@ -1,10 +1,10 @@
 import glob
 import threading
-import time
 import tkinter as tk
 from tkinter import ttk
 
 from prepare_server import perpare_server
+from upload_server import upload_server
 
 
 def prepare(version):
@@ -17,7 +17,7 @@ def prepare(version):
     except:
         pass
     prepare_button.config(state=tk.NORMAL)
-    folder_entry.set_menu(*glob.glob('tmp_*'))
+    folder_entry.set_menu(*glob.glob('tmp_*[!.zip]'))
     folder_value.set(path)
     upload_button.config(state=tk.NORMAL)
 
@@ -30,9 +30,7 @@ def upload(tag, folder):
 
     upload_button.config(state=tk.DISABLED)
     try:
-        print(tag)
-        print(folder)
-        time.sleep(3)
+        upload_server(tag, folder)
     except:
         pass
     upload_button.config(state=tk.NORMAL)
@@ -61,7 +59,7 @@ tag_label = tk.Label(root, text="Tag (MUST be unique or will overwrite):")
 tag_entry = tk.Entry(root)
 folder_label = tk.Label(root, text="Folder:")
 folder_value = tk.StringVar(root)
-folder_options = glob.glob('tmp_*')
+folder_options = glob.glob('tmp_*[!.zip]')
 folder_value.set("No folders found" if len(folder_options) == 0 else folder_options[0])
 folder_entry = ttk.OptionMenu(root, folder_value, *folder_options)
 upload_button = tk.Button(root, text="Upload", command=on_upload_button_click, state=tk.DISABLED if len(folder_options) == 0 else tk.NORMAL)
