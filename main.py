@@ -12,19 +12,25 @@ def prepare(version):
     prepare_loading_spinner.start()
 
     prepare_button.config(state=tk.DISABLED)
+    path = None
     try:
         path = perpare_server(version)
     except:
         pass
     prepare_button.config(state=tk.NORMAL)
     folder_entry.set_menu(*glob.glob('tmp_*[!.zip]'))
-    folder_value.set(path)
-    upload_button.config(state=tk.NORMAL)
+
+    if path:
+        folder_value.set(path)
+        upload_button.config(state=tk.NORMAL)
 
     prepare_loading_spinner.stop()
     prepare_loading_spinner.config(mode="determinate")
 
 def upload(tag, folder):
+    if not tag:
+        return
+    
     upload_loading_spinner.config(mode="indeterminate")
     upload_loading_spinner.start()
 
