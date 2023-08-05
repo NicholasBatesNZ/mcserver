@@ -1,6 +1,6 @@
 FROM eclipse-temurin:17-jre-jammy
 
-ENV MAX_HEAP "3G"
+ENV MAX_HEAP "2G"
 
 COPY . .
 
