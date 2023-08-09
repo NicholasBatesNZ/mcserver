@@ -22,10 +22,10 @@ def perpare_server(version):
     open(f'{path}/server.jar', 'wb').write(requests.get(download_url).content)
     open(f'{path}/eula.txt', 'w').write('eula=true')
 
-    os.system(f'cp Dockerfile {path}/Dockerfile')
-    os.system(f'cp buildspec.yml {path}/buildspec.yml')
-    os.system(f'cp ops.json {path}/ops.json')
-    os.system(f'cp server.properties {path}/server.properties')
+    os.system(f'cp templates/Dockerfile {path}/Dockerfile')
+    os.system(f'cp templates/buildspec.yml {path}/buildspec.yml')
+    os.system(f'cp templates/ops.json {path}/ops.json')
+    os.system(f'cp templates/server.properties {path}/server.properties')
 
     ssm = boto3.client('ssm')
     password = ssm.get_parameter(Name='mc-rcon-password', WithDecryption=True)['Parameter']['Value']
