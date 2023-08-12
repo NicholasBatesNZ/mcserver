@@ -1,0 +1,43 @@
+name: Deploy Manager
+run-name: Deploy server manager to S3
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - manageServer/**
+jobs:
+  deploy-manager:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: manageServer
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::251780365797:role/GitHubOIDC
+          role-session-name: ActionsDeploySession
+          aws-region: ap-southeast-2
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Pack sources
+        run: npm run pack
+
+      - name: Copy to S3
+        run: |
+          aws s3 cp index.html s3://mcserver-management/index.html
+          aws s3 cp dist/main.js s3://mcserver-management/main.js
+          aws s3 cp dist/main.css s3://mcserver-management/main.css

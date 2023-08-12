@@ -14,8 +14,14 @@ variable "tags" {
 
 variable "s3_bucket_name" {
   type = string
-  description = "The S3 bucket in which to put all the things."
+  description = "The S3 bucket in which to put the things."
   default = "mcserver-rawfiles"
+}
+
+variable "s3_manager_bucket" {
+  type = string
+  description = "The S3 bucket in which to put the management website."
+  default = "mcserver-management"
 }
 
 variable "domain" {
