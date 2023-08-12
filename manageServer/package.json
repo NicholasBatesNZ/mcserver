@@ -3,15 +3,18 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "serve": "npx webpack serve",
     "pack": "npx webpack"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-ecs": "^3.388.0",
     "@trimble-oss/modus-web-components": "^0.1.51",
     "reset-css": "^5.0.2"
   },
   "devDependencies": {
+    "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",
     "eslint": "^8.47.0",
     "eslint-config-airbnb-base": "^15.0.0",
@@ -20,6 +23,7 @@
     "path": "^0.12.7",
     "terser-webpack-plugin": "^5.3.9",
     "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
   }
 }

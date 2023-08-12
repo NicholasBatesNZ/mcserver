@@ -21,13 +21,4 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  rules: {
-    'import/extensions': [
-      'error',
-      'ignorePackages',
-    ],
-    'import/no-relative-packages': [
-      'off',
-    ],
-  },
 };

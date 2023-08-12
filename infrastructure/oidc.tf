@@ -35,9 +35,16 @@ data "aws_iam_policy_document" "github-permissions-policy" {
   statement {
     effect = "Allow"
     actions = [
-        "s3:PutObject"
+      "s3:DeleteObject",
+      "s3:GetBucketLocation",
+      "s3:GetObject",
+      "s3:ListBucket",
+      "s3:PutObject",
     ]
-    resources = [ "arn:aws:s3:::${var.s3_manager_bucket}/*" ]
+    resources = [
+      "arn:aws:s3:::${var.s3_manager_bucket}",
+      "arn:aws:s3:::${var.s3_manager_bucket}/*"
+    ]
   }
 }
 

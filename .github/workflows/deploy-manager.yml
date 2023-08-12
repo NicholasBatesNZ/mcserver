@@ -37,8 +37,5 @@ jobs:
       - name: Pack sources
         run: npm run pack
 
-      - name: Copy to S3
-        run: |
-          aws s3 cp index.html s3://mcserver-management/index.html
-          aws s3 cp dist/main.js s3://mcserver-management/main.js
-          aws s3 cp dist/main.css s3://mcserver-management/main.css
+      - name: Sync to S3
+        run: aws s3 sync --delete dist s3://mcserver-management
