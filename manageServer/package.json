@@ -8,7 +8,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@trimble-oss/modus-web-components": "^0.1.51"
+    "@trimble-oss/modus-web-components": "^0.1.51",
+    "reset-css": "^5.0.2"
   },
   "devDependencies": {
     "css-loader": "^6.8.1",

@@ -37,7 +37,7 @@ data "aws_iam_policy_document" "github-permissions-policy" {
     actions = [
         "s3:PutObject"
     ]
-    resources = [ "arn:aws:s3:::${var.s3_manager_bucket}" ]
+    resources = [ "arn:aws:s3:::${var.s3_manager_bucket}/*" ]
   }
 }
 
