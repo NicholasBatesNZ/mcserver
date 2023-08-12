@@ -1,0 +1,5 @@
+{
+    "html.customData": [
+        "./manageServer/node_modules/@trimble-oss/modus-web-components/dist/vscode.html-custom-data.json"
+    ]
+}

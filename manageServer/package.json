@@ -1,0 +1,24 @@
+{
+  "name": "manageserver",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "pack": "npx webpack"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@trimble-oss/modus-web-components": "^0.1.51"
+  },
+  "devDependencies": {
+    "css-loader": "^6.8.1",
+    "eslint": "^8.47.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.28.0",
+    "mini-css-extract-plugin": "^2.7.6",
+    "path": "^0.12.7",
+    "terser-webpack-plugin": "^5.3.9",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  }
+}
