@@ -7,14 +7,14 @@ from prepare_server import perpare_server
 from upload_server import upload_server
 
 
-def prepare(version):
+def prepare(version, resource_pack):
     prepare_loading_spinner.config(mode="indeterminate")
     prepare_loading_spinner.start()
 
     prepare_button.config(state=tk.DISABLED)
     path = None
     try:
-        path = perpare_server(version)
+        path = perpare_server(version, resource_pack)
     except:
         pass
     prepare_button.config(state=tk.NORMAL)
@@ -45,7 +45,7 @@ def upload(tag, folder):
     upload_loading_spinner.config(mode="determinate")
 
 def on_prepare_button_click():
-    thread = threading.Thread(target=prepare, args=(version_entry.get(),))
+    thread = threading.Thread(target=prepare, args=(version_entry.get(), resource_pack_entry.get()))
     thread.start()
 
 def on_upload_button_click():
@@ -58,6 +58,8 @@ root.title("Magic Minecrafterer!")
 
 version_label = tk.Label(root, text="Minecraft version:")
 version_entry = tk.Entry(root)
+resource_pack_label = tk.Label(root, text="Custom resource pack (leave empty if no):")
+resource_pack_entry = tk.Entry(root)
 prepare_button = tk.Button(root, text="Download", command=on_prepare_button_click)
 prepare_loading_spinner = ttk.Progressbar(root, mode="determinate", value=0)
 
@@ -74,15 +76,17 @@ upload_loading_spinner = ttk.Progressbar(root, mode="determinate", value=0)
 # Grid layout for widgets
 version_label.grid(row=0, column=0, padx=10, pady=10)
 version_entry.grid(row=0, column=1, padx=10, pady=10)
-prepare_button.grid(row=1, column=0, columnspan=2, padx=10, pady=10)
-prepare_loading_spinner.grid(row=2, column=0, columnspan=2, padx=10, pady=10)
+resource_pack_label.grid(row=1, column=0, padx=10, pady=10)
+resource_pack_entry.grid(row=1, column=1, padx=10, pady=10)
+prepare_button.grid(row=2, column=0, columnspan=2, padx=10, pady=10)
+prepare_loading_spinner.grid(row=3, column=0, columnspan=2, padx=10, pady=10)
 
-tag_label.grid(row=3, column=0, padx=10, pady=10)
-tag_entry.grid(row=3, column=1, padx=10, pady=10)
-folder_label.grid(row=4, column=0, padx=10, pady=10)
-folder_entry.grid(row=4, column=1, padx=10, pady=10)
-upload_button.grid(row=5, column=0, columnspan=2, padx=10, pady=10)
-upload_loading_spinner.grid(row=6, column=0, columnspan=2, padx=10, pady=10)
+tag_label.grid(row=4, column=0, padx=10, pady=10)
+tag_entry.grid(row=4, column=1, padx=10, pady=10)
+folder_label.grid(row=5, column=0, padx=10, pady=10)
+folder_entry.grid(row=5, column=1, padx=10, pady=10)
+upload_button.grid(row=6, column=0, columnspan=2, padx=10, pady=10)
+upload_loading_spinner.grid(row=7, column=0, columnspan=2, padx=10, pady=10)
 
 # Start the main event loop
 root.mainloop()

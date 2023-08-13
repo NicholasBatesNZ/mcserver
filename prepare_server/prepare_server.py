@@ -5,7 +5,7 @@ import sys
 import boto3
 import requests
 
-def perpare_server(version):
+def perpare_server(version, resource_pack=''):
     build = requests.get(f'https://api.papermc.io/v2/projects/paper/versions/{version}/builds').json()['builds'][-1]
 
     number = build['build']
@@ -18,8 +18,10 @@ def perpare_server(version):
     print(f'Server generating in {path}')
 
     os.mkdir(path)
+    os.mkdir(f'{path}/plugins')
 
     open(f'{path}/server.jar', 'wb').write(requests.get(download_url).content)
+    open(f'{path}/plugins/ViaVersion.jar', 'wb').write(requests.get("https://api.spiget.org/v2/resources/19254/download").content)
     open(f'{path}/eula.txt', 'w').write('eula=true')
 
     os.system(f'cp templates/Dockerfile {path}/Dockerfile')
@@ -30,6 +32,9 @@ def perpare_server(version):
     ssm = boto3.client('ssm')
     password = ssm.get_parameter(Name='mc-rcon-password', WithDecryption=True)['Parameter']['Value']
     open(f'{path}/server.properties', 'a').write(f'rcon.password={password}')
+
+    if resource_pack != '':
+        open(f'{path}/server.properties', 'a').write(f'\nresource-pack={resource_pack}')
 
     return path
 
