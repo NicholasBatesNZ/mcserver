@@ -1,2 +1,7 @@
-@import url("./node_modules/reset-css/reset.css");
-@import url("./node_modules/@trimble-oss/modus-web-components/dist/modus-web-components/modus-web-components.css")
+@import url("./node_modules/@trimble-oss/modus-web-components/dist/modus-web-components/modus-web-components.css");
+
+@media (prefers-color-scheme: dark) {
+    html {
+        background: black;
+    }
+}

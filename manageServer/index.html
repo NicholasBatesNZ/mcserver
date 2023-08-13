@@ -7,6 +7,12 @@
         <script src="main.js" type="module"></script>
     </head>
     <body>
-        <modus-alert message="You've installed Modus Web Components!" type="success" />
+        <main>
+            <modus-dropdown animate-list toggle-element-id="toggleButton" style="display:inline-block">
+                <modus-button id="toggleButton" show-caret slot="dropdownToggle">Run task</modus-button>
+                <modus-list id="taskList" slot="dropdownList"></modus-list>
+            </modus-dropdown>
+            <modus-switch disabled id="runTaskToggle"></modus-switch>
+        </main>
     </body>
 </html>
