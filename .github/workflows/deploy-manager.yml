@@ -1,6 +1,7 @@
 name: Deploy Manager
 run-name: Deploy server manager to S3
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -39,3 +40,6 @@ jobs:
 
       - name: Sync to S3
         run: aws s3 sync --delete dist s3://mcserver-management
+
+      - name: Invalidate CloudFront
+        run: aws cloudfront create-invalidation --distribution-id E2FYR9H7VEZOP9 --paths '/*'

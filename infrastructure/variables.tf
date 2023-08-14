@@ -29,3 +29,9 @@ variable "domain" {
   description = "Domain for the server."
   default = "minecraft.batesnz.com"
 }
+
+variable "subdomain" {
+  type = string
+  description = "Subdomain for the management site."
+  default = "magic"
+}

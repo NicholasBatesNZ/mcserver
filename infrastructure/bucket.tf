@@ -11,6 +11,15 @@ resource "aws_s3_bucket_versioning" "mcserver-versioning" {
   }
 }
 
+resource "aws_s3_bucket_public_access_block" "mcserver-private" {
+  bucket = aws_s3_bucket.mcserver-bucket.id
+
+  block_public_acls = true
+  block_public_policy = true
+  ignore_public_acls = true
+  restrict_public_buckets = true
+}
+
 resource "aws_s3_bucket_lifecycle_configuration" "mcserver-lifecycle" {
   bucket = aws_s3_bucket.mcserver-bucket.id
 
@@ -40,36 +49,33 @@ resource "aws_s3_bucket" "mcserver-management-bucket" {
   bucket = var.s3_manager_bucket
 }
 
-resource "aws_s3_bucket_website_configuration" "management-website-s3" {
+resource "aws_s3_bucket_public_access_block" "management-bucket-private" {
   bucket = aws_s3_bucket.mcserver-management-bucket.id
 
-  index_document {
-    suffix = "index.html"
-  }
+  block_public_acls = true
+  block_public_policy = true
+  ignore_public_acls = true
+  restrict_public_buckets = true
 }
 
-resource "aws_s3_bucket_public_access_block" "management-website-public-allow" {
+resource "aws_s3_bucket_policy" "management-policy-cloudfront" {
   bucket = aws_s3_bucket.mcserver-management-bucket.id
+  policy = data.aws_iam_policy_document.management-allow-cloudfront.json
 }
 
-resource "aws_s3_bucket_policy" "management-website-public-access-policy" {
-  bucket = aws_s3_bucket.mcserver-management-bucket.id
-  policy = data.aws_iam_policy_document.management-website-public-access-policy-data.json
-}
-
-data "aws_iam_policy_document" "management-website-public-access-policy-data" {
+data "aws_iam_policy_document" "management-allow-cloudfront" {
   statement {
+    effect = "Allow"
     principals {
-      type = "AWS"
-      identifiers = [ "*" ]
+      type = "Service"
+      identifiers = [ "cloudfront.amazonaws.com" ]
     }
-
-    actions = [
-      "s3:GetObject"
-    ]
-
-    resources = [
-      "${aws_s3_bucket.mcserver-management-bucket.arn}/*",
-    ]
+    actions = [ "s3:GetObject" ]
+    resources = [ "${aws_s3_bucket.mcserver-management-bucket.arn}/*" ]
+    condition {
+      test = "StringEquals"
+      variable = "AWS:SourceArn"
+      values = [ "arn:aws:cloudfront::251780365797:distribution/${aws_cloudfront_distribution.management-distribution.id}" ]
+    }
   }
 }

@@ -46,6 +46,11 @@ data "aws_iam_policy_document" "github-permissions-policy" {
       "arn:aws:s3:::${var.s3_manager_bucket}/*"
     ]
   }
+  statement {
+    effect = "Allow"
+    actions = [ "cloudfront:CreateInvalidation" ]
+    resources = [ "arn:aws:cloudfront::251780365797:distribution/${aws_cloudfront_distribution.management-distribution.id}" ]
+  }
 }
 
 resource "aws_iam_role_policy" "github-role-policy" {
