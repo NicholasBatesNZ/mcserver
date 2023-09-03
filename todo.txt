@@ -1,33 +1,29 @@
 infra
-    sort why no public ip
-    fix tasks
-    maybe setup to get new elastic ip each night to protect against nonsense
-    change everything to t3.medium
     see about moving cloudfront to other bucket with prefix permissions
     give ryan appropriate permissions
-    cloudwatch agent + cloudwatch container insights on ec2s to report RAM, logs and more
-    ecs events -> sns topic -> lambdas
-        * -> discord
-        scale out -> create route53 record
-        scale in -> delete route53 record
+    auto delete route53 record
+    filter sns topic to upsert lambda if possible
 gui web
     check for cookies and input or upload
-    buttons to set_desired_capacity of group to 1 and 0 (outside of scheduled times)
+    button to persist running world in efs or s3
     investigate websocket api gateway for (instant) service updates
     api gateway using iam auth calling services directly
     stretch goal cognito user pools and sts federated access to eliminate cookie need
 gui py
     kill viaversion maybe
     xero mans confusing bash script thing to run the server
-    modified dockerfile option to persist world in an efs or upload to s3 when done and pull next time
     change os calls to system agnostic python
 refactor
     remove hardcoded values
     handle errors
     clean up code?
 terraform
-    ecs cluster, group, template, scheduled scaling
+    VPC, subnet, route table, security group, igw
+    ecs cluster, group, template
+    lambdas
     iam roles, policies, etc.
-    VPC, subnet, security groups, etc
     certificate signing thing route 53
     s3 upload event notification to trigger codebuild and task definition via sns to lambdas?
+akl region
+    switch to IPv6
+    more

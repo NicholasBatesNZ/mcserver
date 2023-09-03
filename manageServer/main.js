@@ -117,13 +117,13 @@ document.addEventListener('switchClick', async (event) => {
         cluster: 'DevCluster',
         taskDefinition: state.selectedTask.arn,
         overrides: {
-          memory: '15360',
+          memory: '3584',
           containerOverrides: [{
             name: 'mcserver',
-            memory: 15360,
+            memory: 3584,
             environment: [{
               name: 'MAX_HEAP',
-              value: '14G',
+              value: '3G',
             }],
           }],
         },
