@@ -8,6 +8,9 @@
     </head>
     <body>
         <main>
+            <modus-modal header-text="Credentials not found." primary-button-text="Just do it!" primary-button-disabled >
+                <modus-file-dropzone></modus-file-dropzone>
+            </modus-modal>
             <modus-dropdown animate-list toggle-element-id="toggleButton" style="display:inline-block">
                 <modus-button id="toggleButton" show-caret slot="dropdownToggle">Run task</modus-button>
                 <modus-list id="taskList" slot="dropdownList"></modus-list>

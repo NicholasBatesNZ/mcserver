@@ -10,7 +10,38 @@ import {
 } from '@aws-sdk/client-ecs';
 import { defineCustomElements } from '@trimble-oss/modus-web-components/loader';
 
-defineCustomElements();
+const getCookie = (name) => document.cookie
+  .split('; ')
+  .find((row) => row.startsWith(`${name}=`))
+  ?.split('=')[1];
+
+const accessKeyId = getCookie('aws_access_key_id');
+const secretAccessKey = getCookie('aws_secret_access_key');
+
+defineCustomElements().then(() => {
+  if (!accessKeyId || !secretAccessKey) {
+    document.querySelector('modus-modal').open();
+
+    document.querySelector('modus-file-dropzone').addEventListener('files', (event) => {
+      const [files] = event.detail;
+      const reader = new FileReader();
+      reader.readAsText(files[0]);
+
+      reader.onload = (content) => {
+        const lines = content.target.result.split('\n');
+        if (files[0].name === 'credentials') {
+          document.cookie = lines[1].replaceAll(' ', '');
+          document.cookie = lines[2].replaceAll(' ', '');
+        } else {
+          const [key, secret] = lines[1].split(',');
+          document.cookie = `aws_access_key_id=${key}`;
+          document.cookie = `aws_secret_access_key=${secret}`;
+        }
+        window.location.reload();
+      };
+    });
+  }
+});
 
 const state = new Proxy({}, {
   set(target, prop, value) {
@@ -25,14 +56,6 @@ const setDarkMode = (bool) => document.documentElement.setAttribute('data-mwc-th
 
 if (darkModeMatcher.matches) setDarkMode(true);
 darkModeMatcher.addEventListener('change', (event) => setDarkMode(event.matches));
-
-const getCookie = (name) => document.cookie
-  .split('; ')
-  .find((row) => row.startsWith(`${name}=`))
-  ?.split('=')[1];
-
-const accessKeyId = getCookie('accessKeyId');
-const secretAccessKey = getCookie('secretAccessKey');
 
 const awsCredentials = {
   region: 'ap-southeast-2',
