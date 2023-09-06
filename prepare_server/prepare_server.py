@@ -18,10 +18,8 @@ def perpare_server(version, resource_pack=''):
     print(f'Server generating in {path}')
 
     os.mkdir(path)
-    os.mkdir(f'{path}/plugins')
 
     open(f'{path}/server.jar', 'wb').write(requests.get(download_url).content)
-    open(f'{path}/plugins/ViaVersion.jar', 'wb').write(requests.get("https://api.spiget.org/v2/resources/19254/download").content)
     open(f'{path}/eula.txt', 'w').write('eula=true')
 
     os.system(f'cp templates/Dockerfile {path}/Dockerfile')
