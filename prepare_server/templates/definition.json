@@ -1,0 +1,30 @@
+{
+  "family": "$IMAGE_TAG",
+  "executionRoleArn": "arn:aws:iam::251780365797:role/ecsTaskExecutionRole",
+  "networkMode": "host",
+  "memory": "3072",
+  "containerDefinitions": [
+    {
+      "name": "mcserver",
+      "image": "public.ecr.aws/l3c0s8n4/mcserver:$IMAGE_TAG",
+      "portMappings": [
+        {
+          "containerPort": 25565,
+          "hostPort": 25565,
+          "protocol": "tcp"
+        },
+        {
+          "containerPort": 25565,
+          "hostPort": 25565,
+          "protocol": "udp"
+        },
+        {
+          "containerPort": 25575,
+          "hostPort": 25575,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true
+    }
+  ]
+}

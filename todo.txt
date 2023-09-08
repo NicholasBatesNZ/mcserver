@@ -5,6 +5,12 @@ infra
     filter sns topic to upsert lambda if possible
 gui web
     button to persist running world in efs or s3
+    change to radio button layout
+    versions displayed
+    search filter
+    make cookies not expire
+    validate cookies before storing forever
+    refresh page on modal close
     investigate websocket api gateway for (instant) service updates
     api gateway using iam auth calling services directly
     stretch goal cognito user pools and sts federated access to eliminate cookie need
@@ -12,6 +18,8 @@ gui py
     kill viaversion maybe
     xero mans confusing bash script thing to run the server
     change os calls to system agnostic python
+minecraft
+    kill empty server task via plugin
 refactor
     remove hardcoded values
     handle errors

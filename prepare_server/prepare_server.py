@@ -1,3 +1,4 @@
+import json
 import os
 import random
 import sys
@@ -22,8 +23,12 @@ def perpare_server(version, resource_pack=''):
     open(f'{path}/server.jar', 'wb').write(requests.get(download_url).content)
     open(f'{path}/eula.txt', 'w').write('eula=true')
 
+    with open(f'{path}/metadata.json', 'w') as metadata:
+        json.dump({'version': version}, metadata)
+
     os.system(f'cp templates/Dockerfile {path}/Dockerfile')
     os.system(f'cp templates/buildspec.yml {path}/buildspec.yml')
+    os.system(f'cp templates/definition.json {path}/definition.json')
     os.system(f'cp templates/ops.json {path}/ops.json')
     os.system(f'cp templates/server.properties {path}/server.properties')
 
