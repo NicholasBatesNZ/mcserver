@@ -30,7 +30,6 @@ terraform
     lambdas
     iam roles, policies, etc.
     certificate signing thing route 53
-    s3 upload event notification to trigger codebuild and task definition via sns to lambdas?
 akl region
     switch to IPv6
     more
