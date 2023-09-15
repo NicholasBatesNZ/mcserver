@@ -4,11 +4,6 @@ variable "aws_region" {
   default = "ap-southeast-2"
 }
 
-variable "aws_profile" {
-  type = string
-  description = "The AWS profile to use for authentication."
-}
-
 variable "tags" {
   type = map(string)
   description = "Tags to put on all resources"
