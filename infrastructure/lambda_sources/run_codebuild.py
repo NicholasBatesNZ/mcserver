@@ -10,15 +10,14 @@ def lambda_handler(event, context):
     
     # Extract the file name from the event
     try:
+        s3_bucket_name = event['Records'][0]['s3']['bucket']['name']
         s3_object_key = event['Records'][0]['s3']['object']['key']
-        # Extract only the object name (file name)
         object_name = s3_object_key.split('/')[-1]
-        print("Uploaded file name: " + object_name)
 
         codebuild = boto3.client('codebuild')
         codebuild.start_build(
             projectName="mcserver-build",
-            sourceLocationOverride=f"mcserver-rawfiles/zips/{object_name}.zip",
+            sourceLocationOverride=f"{s3_bucket_name}/{s3_object_key}",
             environmentVariablesOverride=
             [
                 {
@@ -33,4 +32,4 @@ def lambda_handler(event, context):
         print("Error extracting file name from S3 event: " + str(e))
 
     except ClientError as e:
-            print(e)
+        print(e)

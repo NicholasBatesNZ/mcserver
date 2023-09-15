@@ -42,6 +42,32 @@ resource "aws_s3_bucket_lifecycle_configuration" "mcserver-lifecycle" {
 
     status = "Enabled"
   }
+
+  rule {
+    id = "Freeze lambda sources"
+
+    filter {
+      prefix = "lambda_sources"
+    }
+    
+    noncurrent_version_expiration {
+      noncurrent_days = 1
+    }
+
+    status = "Enabled"
+  }
+}
+
+resource "aws_s3_bucket_notification" "rawfiles_notification" {
+  bucket = aws_s3_bucket.mcserver-bucket.id
+
+  lambda_function {
+    lambda_function_arn = aws_lambda_function.run_codebuild.arn
+    filter_prefix = "zips/"
+    events = [ "s3:ObjectCreated:*" ]
+  }
+
+  depends_on = [ aws_lambda_permission.codebuild_lambda_allow_bucket ]
 }
 
 # website
