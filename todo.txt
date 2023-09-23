@@ -25,8 +25,7 @@ refactor
     handle errors
     clean up code?
 terraform
-    VPC, subnet, route table, security group, igw
-    ecs cluster, group, template
+    ecs cluster, group, template, security group
     lambdas
     iam roles, policies, etc.
     certificate signing thing route 53

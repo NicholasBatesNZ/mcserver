@@ -82,7 +82,7 @@ data "aws_iam_policy_document" "lambda_execution_policy_doc_codebuild" {
   statement {
     effect = "Allow"
     actions = [ "codebuild:StartBuild" ]
-    resources = [ "arn:aws:codebuild::251780365797:project/mcserver-build" ]
+    resources = [ "arn:aws:codebuild:ap-southeast-2:251780365797:project/mcserver-build" ]
   }
 }
 
