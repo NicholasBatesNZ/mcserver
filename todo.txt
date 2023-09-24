@@ -15,6 +15,7 @@ gui web
     api gateway using iam auth calling services directly
     stretch goal cognito user pools and sts federated access to eliminate cookie need
 gui py
+    optionally read credentials from file to aws cli isn't needed
     xero mans confusing bash script thing to run the server
 minecraft
     kill empty server task via plugin or datapack
