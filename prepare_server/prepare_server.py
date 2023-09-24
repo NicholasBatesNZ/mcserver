@@ -1,10 +1,11 @@
 import json
-import os
 import random
+import shutil
 import sys
 
 import boto3
 import requests
+
 
 def perpare_server(version, resource_pack=''):
     build = requests.get(f'https://api.papermc.io/v2/projects/paper/versions/{version}/builds').json()['builds'][-1]
@@ -18,19 +19,13 @@ def perpare_server(version, resource_pack=''):
     path = f'tmp_{version}_{random.getrandbits(32)}'
     print(f'Server generating in {path}')
 
-    os.mkdir(path)
+    shutil.copytree('templates', path)
 
     open(f'{path}/server.jar', 'wb').write(requests.get(download_url).content)
     open(f'{path}/eula.txt', 'w').write('eula=true')
 
     with open(f'{path}/metadata.json', 'w') as metadata:
         json.dump({'version': version}, metadata)
-
-    os.system(f'cp templates/Dockerfile {path}/Dockerfile')
-    os.system(f'cp templates/buildspec.yml {path}/buildspec.yml')
-    os.system(f'cp templates/definition.json {path}/definition.json')
-    os.system(f'cp templates/ops.json {path}/ops.json')
-    os.system(f'cp templates/server.properties {path}/server.properties')
 
     ssm = boto3.client('ssm')
     password = ssm.get_parameter(Name='mc-rcon-password', WithDecryption=True)['Parameter']['Value']
