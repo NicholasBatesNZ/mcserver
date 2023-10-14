@@ -16,5 +16,4 @@ phases:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
       - docker push $IMAGE_REPO_URI/$IMAGE_REPO_NAME:$IMAGE_TAG
-      - sed -i "s/\$IMAGE_TAG/${IMAGE_TAG}/g" definition.json
       - aws ecs register-task-definition --cli-input-json file://definition.json --tags key="ryanFriendly",value="yes" key="McVersion",value=$(cat metadata.json | jq .version)

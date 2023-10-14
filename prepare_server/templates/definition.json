@@ -1,12 +1,12 @@
 {
-  "family": "$IMAGE_TAG",
+  "family": "",
   "executionRoleArn": "arn:aws:iam::251780365797:role/ecsTaskExecutionRole",
   "networkMode": "host",
   "memory": "3072",
   "containerDefinitions": [
     {
       "name": "mcserver",
-      "image": "public.ecr.aws/l3c0s8n4/mcserver:$IMAGE_TAG",
+      "image": "",
       "portMappings": [
         {
           "containerPort": 25565,

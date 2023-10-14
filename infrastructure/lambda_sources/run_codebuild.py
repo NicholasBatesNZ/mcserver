@@ -12,7 +12,7 @@ def lambda_handler(event, context):
     try:
         s3_bucket_name = event['Records'][0]['s3']['bucket']['name']
         s3_object_key = event['Records'][0]['s3']['object']['key']
-        object_name = s3_object_key.split('/')[-1]
+        object_name = s3_object_key.split('/')[-1].split('.')[0]
 
         codebuild = boto3.client('codebuild')
         codebuild.start_build(

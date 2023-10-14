@@ -7,7 +7,7 @@ import boto3
 import requests
 
 
-def perpare_server(version, resource_pack=''):
+def prepare_server(version, resource_pack=''):
     build = requests.get(f'https://api.papermc.io/v2/projects/paper/versions/{version}/builds').json()['builds'][-1]
 
     number = build['build']
@@ -36,5 +36,6 @@ def perpare_server(version, resource_pack=''):
 
     return path
 
+
 if __name__ == "__main__":
-    perpare_server("1.20.1" if len(sys.argv) == 1 else sys.argv[1])
+    prepare_server("1.20.1" if len(sys.argv) == 1 else sys.argv[1])
