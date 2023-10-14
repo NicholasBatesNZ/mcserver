@@ -3,6 +3,7 @@ terraform {
     region = "ap-southeast-2"
     bucket = "mcserver-rawfiles"
     key = "terraform/terraform.tfstate"
+    encrypt = true
   }
   
   required_providers {

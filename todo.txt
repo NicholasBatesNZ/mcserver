@@ -15,11 +15,10 @@ gui web
     api gateway using iam auth calling services directly
     stretch goal cognito user pools and sts federated access to eliminate cookie need
 gui py
-    kill viaversion maybe
+    optionally read credentials from file so aws cli isn't needed
     xero mans confusing bash script thing to run the server
-    change os calls to system agnostic python
 minecraft
-    kill empty server task via plugin
+    kill empty server task via plugin or datapack
 refactor
     remove hardcoded values
     handle errors

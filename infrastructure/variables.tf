@@ -35,3 +35,8 @@ variable "subdomain" {
   description = "Subdomain for the management site."
   default = "magic"
 }
+
+variable "rcon_password" {
+  type = string
+  description = "Password to access server via RCON."
+}
