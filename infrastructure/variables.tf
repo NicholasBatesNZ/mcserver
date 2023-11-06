@@ -40,3 +40,8 @@ variable "rcon_password" {
   type = string
   description = "Password to access server via RCON."
 }
+
+variable "discord_webhook" {
+  type = string
+  description = "Webhook URL to send discord messages."
+}

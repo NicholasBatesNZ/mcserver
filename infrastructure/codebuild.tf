@@ -56,21 +56,13 @@ data "archive_file" "codebuild_lambda_source_zip" {
   output_path = "lambda_sources/run_codebuild.zip"
 }
 
-resource "aws_s3_object" "codebuild_lambda_source_object" {
-  bucket = var.s3_bucket_name
-  key = "lambda_sources/run_codebuild.zip"
-  source = data.archive_file.codebuild_lambda_source_zip.output_path
-  source_hash = data.archive_file.codebuild_lambda_source_zip.output_base64sha256
-}
-
 resource "aws_lambda_function" "run_codebuild" {
   function_name = "RunCodeBuild"
   runtime = "python3.11"
   handler = "run_codebuild.lambda_handler"
-  s3_bucket = var.s3_bucket_name
-  s3_key = aws_s3_object.codebuild_lambda_source_object.key
   role = aws_iam_role.lambda_execution_role_codebuild.arn
-  source_code_hash = aws_s3_object.codebuild_lambda_source_object.source_hash
+  filename = data.archive_file.codebuild_lambda_source_zip.output_path
+  source_code_hash = data.archive_file.codebuild_lambda_source_zip.output_base64sha256
 }
 
 resource "aws_iam_role" "lambda_execution_role_codebuild" {

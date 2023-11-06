@@ -25,7 +25,6 @@ refactor
     clean up code?
 terraform
     ecs cluster, group, template, security group
-    lambdas
     iam roles, policies, etc.
     certificate signing thing route 53
 akl region
