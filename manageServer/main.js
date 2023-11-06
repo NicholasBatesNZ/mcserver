@@ -81,24 +81,24 @@ const taskFamilies = [...new Set(
   data.ResourceTagMappingList.map(
     (resource) => {
       const [prefix, suffix] = resource.ResourceARN.split('/');
-      const version = resource.Tags.filter(tag => tag.Key === "McVersion")[0];
+      const version = resource.Tags.filter((tag) => tag.Key === 'McVersion')[0];
       return {
-          arn: `${prefix}/${suffix.split(':')[0]}`,
-          version: version?.Value ?? "1.?.?"
-      }
+        arn: `${prefix}/${suffix.split(':')[0]}`,
+        version: version?.Value ?? '1.?.?',
+      };
     },
   ),
 )];
 
-const tasks = taskFamilies.map(({arn, version}) => ({
+const tasks = taskFamilies.map(({ arn, version }) => ({
   arn,
   version,
-  tag: arn.split('/')[1]
+  tag: arn.split('/')[1],
 }));
 
 tasks.forEach((task) => {
   const item = document.createElement('modus-list-item');
-  item.appendChild(document.createTextNode(`${task.tag} | ${task?.version}`));
+  item.appendChild(document.createTextNode(`${task.tag} | ${task.version}`));
   item.onclick = () => { state.selectedTask = task; };
   document.querySelector('#taskList').appendChild(item);
 });
