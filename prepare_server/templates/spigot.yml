@@ -1,0 +1,9 @@
+world-settings:
+  default:
+    entity-tracking-range:
+      players: 1024
+      animals: 1024
+      monsters: 1024
+      misc: 1024
+      display: 1024
+      other: 1024

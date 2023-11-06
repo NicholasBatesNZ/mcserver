@@ -96,6 +96,8 @@ const tasks = taskFamilies.map(({ arn, version }) => ({
   tag: arn.split('/')[1],
 }));
 
+tasks.sort((a, b) => a.tag.localeCompare(b.tag));
+
 tasks.forEach((task) => {
   const item = document.createElement('modus-list-item');
   item.appendChild(document.createTextNode(`${task.tag} | ${task.version}`));
