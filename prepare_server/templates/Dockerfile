@@ -2,6 +2,8 @@ FROM eclipse-temurin:17-jre-jammy
 
 ENV MAX_HEAP "2G"
 
+WORKDIR /mcserver
+
 COPY . .
 
 EXPOSE 25565

@@ -1,6 +1,5 @@
 {
   "family": "",
-  "executionRoleArn": "arn:aws:iam::251780365797:role/ecsTaskExecutionRole",
   "networkMode": "host",
   "memory": "3072",
   "containerDefinitions": [

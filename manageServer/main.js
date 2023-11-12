@@ -79,8 +79,8 @@ const data = await taggingClient.send(
   }),
 );
 
-const taskFamilies = [...new Set(
-  data.ResourceTagMappingList.map(
+const taskFamilies = data.ResourceTagMappingList
+  .map(
     (resource) => {
       const [prefix, suffix] = resource.ResourceARN.split('/');
       const version = resource.Tags.filter((tag) => tag.Key === 'McVersion')[0];
@@ -89,8 +89,9 @@ const taskFamilies = [...new Set(
         version: version?.Value ?? '1.?.?',
       };
     },
-  ),
-)];
+  )
+  .filter((value, index, self) => index === self
+    .findIndex((entry) => entry.arn === value.arn && entry.version === value.version));
 
 const tasks = taskFamilies.map(({ arn, version }) => ({
   arn,
