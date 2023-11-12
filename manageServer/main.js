@@ -17,6 +17,7 @@ const getCookie = (name) => document.cookie
 
 const accessKeyId = getCookie('aws_access_key_id');
 const secretAccessKey = getCookie('aws_secret_access_key');
+const sessionToken = getCookie('aws_session_token');
 
 defineCustomElements().then(() => {
   if (!accessKeyId || !secretAccessKey) {
@@ -62,6 +63,7 @@ const awsCredentials = {
   credentials: {
     accessKeyId,
     secretAccessKey,
+    sessionToken,
   },
 };
 

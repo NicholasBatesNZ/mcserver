@@ -5,8 +5,8 @@ infra
     filter sns topic to upsert lambda if possible
 gui web
     button to persist running world in efs or s3
+    option to use higher ram instance
     change to radio button layout
-    versions displayed
     search filter
     make cookies not expire
     validate cookies before storing forever
@@ -15,6 +15,7 @@ gui web
     api gateway using iam auth calling services directly
     stretch goal cognito user pools and sts federated access to eliminate cookie need
 gui py
+    build for distribution
     optionally read credentials from file so aws cli isn't needed
     xero mans confusing bash script thing to run the server
 minecraft
