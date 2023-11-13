@@ -149,6 +149,7 @@ document.addEventListener('switchClick', async (event) => {
       new RunTaskCommand({
         cluster: 'DevCluster',
         taskDefinition: state.selectedTask.arn,
+        enableExecuteCommand: true,
         overrides: {
           memory: '3584',
           containerOverrides: [{
