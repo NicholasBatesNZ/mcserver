@@ -151,6 +151,7 @@ document.addEventListener('switchClick', async (event) => {
         taskDefinition: state.selectedTask.arn,
         enableExecuteCommand: true,
         overrides: {
+          taskRoleArn: 'arn:aws:iam::251780365797:role/ecsTaskExecutionRole',
           memory: '3584',
           containerOverrides: [{
             name: 'mcserver',
