@@ -5,7 +5,7 @@ resource "aws_s3_bucket" "mcserver-bucket" {
 
 resource "aws_s3_bucket_versioning" "mcserver-versioning" {
   bucket = aws_s3_bucket.mcserver-bucket.id
-  
+
   versioning_configuration {
     status = "Enabled"
   }
@@ -14,9 +14,9 @@ resource "aws_s3_bucket_versioning" "mcserver-versioning" {
 resource "aws_s3_bucket_public_access_block" "mcserver-private" {
   bucket = aws_s3_bucket.mcserver-bucket.id
 
-  block_public_acls = true
-  block_public_policy = true
-  ignore_public_acls = true
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
   restrict_public_buckets = true
 }
 
@@ -32,11 +32,11 @@ resource "aws_s3_bucket_lifecycle_configuration" "mcserver-lifecycle" {
 
     noncurrent_version_transition {
       noncurrent_days = 7
-      storage_class = "GLACIER_IR"
+      storage_class   = "GLACIER_IR"
     }
 
     transition {
-      days = 7
+      days          = 7
       storage_class = "GLACIER_IR"
     }
 
@@ -49,7 +49,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "mcserver-lifecycle" {
     filter {
       prefix = "lambda_sources"
     }
-    
+
     noncurrent_version_expiration {
       noncurrent_days = 1
     }
@@ -63,11 +63,11 @@ resource "aws_s3_bucket_notification" "rawfiles_notification" {
 
   lambda_function {
     lambda_function_arn = aws_lambda_function.run_codebuild.arn
-    filter_prefix = "zips/"
-    events = [ "s3:ObjectCreated:*" ]
+    filter_prefix       = "zips/"
+    events              = ["s3:ObjectCreated:*"]
   }
 
-  depends_on = [ aws_lambda_permission.codebuild_lambda_allow_bucket ]
+  depends_on = [aws_lambda_permission.codebuild_lambda_allow_bucket]
 }
 
 # website
@@ -78,9 +78,9 @@ resource "aws_s3_bucket" "mcserver-management-bucket" {
 resource "aws_s3_bucket_public_access_block" "management-bucket-private" {
   bucket = aws_s3_bucket.mcserver-management-bucket.id
 
-  block_public_acls = true
-  block_public_policy = true
-  ignore_public_acls = true
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
   restrict_public_buckets = true
 }
 
@@ -93,15 +93,15 @@ data "aws_iam_policy_document" "management-allow-cloudfront" {
   statement {
     effect = "Allow"
     principals {
-      type = "Service"
-      identifiers = [ "cloudfront.amazonaws.com" ]
+      type        = "Service"
+      identifiers = ["cloudfront.amazonaws.com"]
     }
-    actions = [ "s3:GetObject" ]
-    resources = [ "${aws_s3_bucket.mcserver-management-bucket.arn}/*" ]
+    actions   = ["s3:GetObject"]
+    resources = ["${aws_s3_bucket.mcserver-management-bucket.arn}/*"]
     condition {
-      test = "StringEquals"
+      test     = "StringEquals"
       variable = "AWS:SourceArn"
-      values = [ "arn:aws:cloudfront::251780365797:distribution/${aws_cloudfront_distribution.management-distribution.id}" ]
+      values   = ["arn:aws:cloudfront::251780365797:distribution/${aws_cloudfront_distribution.management-distribution.id}"]
     }
   }
 }

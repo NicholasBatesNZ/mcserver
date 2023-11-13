@@ -1,5 +1,8 @@
 FROM eclipse-temurin:17-jre-jammy
 
+RUN apt update -y
+RUN apt install zip awscli -y
+
 ENV MAX_HEAP "2G"
 
 WORKDIR /mcserver
