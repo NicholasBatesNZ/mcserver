@@ -1,15 +1,15 @@
 terraform {
   backend "s3" {
-    region = "ap-southeast-2"
-    bucket = "mcserver-rawfiles"
-    key = "terraform/terraform.tfstate"
+    region  = "ap-southeast-2"
+    bucket  = "mcserver-rawfiles"
+    key     = "terraform/terraform.tfstate"
     encrypt = true
   }
-  
+
   required_providers {
     aws = {
-        source = "hashicorp/aws"
-        version = "~> 5.0"
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
     }
   }
 }
@@ -24,7 +24,7 @@ provider "aws" {
 provider "aws" {
   alias  = "us_east_1"
   region = "us-east-1"
-  
+
   default_tags {
     tags = var.tags
   }

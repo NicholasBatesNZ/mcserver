@@ -1,11 +1,11 @@
 variable "aws_region" {
-  type = string
+  type        = string
   description = "The AWS region in which to build the resources."
-  default = "ap-southeast-2"
+  default     = "ap-southeast-2"
 }
 
 variable "tags" {
-  type = map(string)
+  type        = map(string)
   description = "Tags to put on all resources"
   default = {
     "creator" = "mcdocker"
@@ -13,37 +13,37 @@ variable "tags" {
 }
 
 variable "s3_bucket_name" {
-  type = string
+  type        = string
   description = "The S3 bucket in which to put the things."
-  default = "mcserver-rawfiles"
+  default     = "mcserver-rawfiles"
 }
 
 variable "s3_manager_bucket" {
-  type = string
+  type        = string
   description = "The S3 bucket in which to put the management website."
-  default = "mcserver-management"
+  default     = "mcserver-management"
 }
 
 variable "domain" {
-  type = string
+  type        = string
   description = "Domain for the server."
-  default = "minecraft.batesnz.com"
+  default     = "minecraft.batesnz.com"
 }
 
 variable "subdomain" {
-  type = string
+  type        = string
   description = "Subdomain for the management site."
-  default = "magic"
+  default     = "magic"
 }
 
 variable "rcon_password" {
-  type = string
+  type        = string
   description = "Password to access server via RCON."
-  sensitive = true
+  sensitive   = true
 }
 
 variable "discord_webhook" {
-  type = string
+  type        = string
   description = "Webhook URL to send discord messages."
-  sensitive = true
+  sensitive   = true
 }
