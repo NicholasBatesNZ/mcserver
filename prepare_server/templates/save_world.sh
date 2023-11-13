@@ -17,7 +17,7 @@ S3_BUCKET="s3://mcserver-rawfiles/zips/"
 cd "$(dirname "${BASH_SOURCE[0]}")" || exit 1
 
 # Archive the script's directory
-sudo zip -r "$ZIP_FILE" .
+zip -r "$ZIP_FILE" .
 
 # Check if zip command was successful
 if [ $? -ne 0 ]; then
