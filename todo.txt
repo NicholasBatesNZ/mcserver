@@ -1,5 +1,6 @@
 infra
     give ryan appropriate permissions
+    better least permissions on ecs instance role
     see about moving cloudfront to other bucket with prefix permissions
     auto delete route53 record
     filter sns topic to upsert lambda if possible
@@ -25,8 +26,7 @@ refactor
     handle errors
     clean up code?
 terraform
-    ecs cluster, group, template, security group
-    iam roles, policies, etc.
+    iam roles (incl ecs task execution role), policies, etc.
     certificate signing thing route 53
 akl region
     switch to IPv6
