@@ -13,6 +13,9 @@ repositories {
 
 dependencies {
     paperweight.paperDevBundle("1.20.2-R0.1-SNAPSHOT")
+
+    implementation(platform("software.amazon.awssdk:bom:2.21.1"))
+    implementation("software.amazon.awssdk:s3")
 }
 
 tasks {

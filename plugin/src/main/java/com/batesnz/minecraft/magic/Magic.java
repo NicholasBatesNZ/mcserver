@@ -1,21 +1,24 @@
 package com.batesnz.minecraft.magic;
 
+import com.batesnz.minecraft.magic.commands.UploadWorldCommand;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Magic extends JavaPlugin implements Listener {
+import java.util.Optional;
+
+public class Magic extends JavaPlugin {
+
+    public static ComponentLogger logger;
 
     @Override
     public void onEnable() {
-        Bukkit.getPluginManager().registerEvents(this, this);
-    }
+        logger = this.getComponentLogger();
 
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        event.getPlayer().sendMessage(Component.text("Sup, " + event.getPlayer().getName()));
+        Optional.ofNullable(
+                this.getCommand("uploadworld")).ifPresentOrElse(
+                        command -> command.setExecutor(new UploadWorldCommand(this)),
+                        () -> logger.error(Component.text("Command not registered"))
+                );
     }
 }
