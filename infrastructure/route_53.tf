@@ -44,7 +44,7 @@ data "aws_iam_policy_document" "lambda_execution_policy_doc_route53" {
       "route53:GetChange",
       "route53:ListResourceRecordSets"
     ]
-    resources = ["arn:aws:route53:::hostedzone/${aws_route53_zone.mcserver-zone.id}"]
+    resources = [aws_route53_zone.mcserver-zone.arn]
   }
 }
 

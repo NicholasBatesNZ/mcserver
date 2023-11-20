@@ -14,7 +14,7 @@ resource "aws_internet_gateway" "gateway" {
 resource "aws_subnet" "akl_local" {
   vpc_id                  = aws_vpc.vpc.id
   cidr_block              = "10.0.0.0/26"
-  availability_zone       = "ap-southeast-2-akl-1a"
+  availability_zone       = var.aws_availability_zone
   map_public_ip_on_launch = true
   tags = {
     "Name" = "akl-local"

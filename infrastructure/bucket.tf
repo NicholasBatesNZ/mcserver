@@ -101,7 +101,7 @@ data "aws_iam_policy_document" "management-allow-cloudfront" {
     condition {
       test     = "StringEquals"
       variable = "AWS:SourceArn"
-      values   = ["arn:aws:cloudfront::251780365797:distribution/${aws_cloudfront_distribution.management-distribution.id}"]
+      values   = [aws_cloudfront_distribution.management-distribution.arn]
     }
   }
 }

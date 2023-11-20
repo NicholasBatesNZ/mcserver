@@ -1,6 +1,6 @@
 infra
     give ryan appropriate permissions
-    better least permissions on ecs instance role
+    better least permissions on ecs instance, task execution, codebuild service roles
     see about moving cloudfront to other bucket with prefix permissions
     auto delete route53 record
     filter sns topic to upsert lambda if possible

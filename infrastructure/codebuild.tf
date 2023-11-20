@@ -1,6 +1,57 @@
+resource "aws_iam_role" "codebuild_service_role" {
+  name               = "CodeBuildServiceRole"
+  assume_role_policy = data.aws_iam_policy_document.codebuild_service_role_trust_policy.json
+}
+
+data "aws_iam_policy_document" "codebuild_service_role_policy_doc" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "ecr-public:BatchCheckLayerAvailability",
+      "ecr-public:CompleteLayerUpload",
+      "ecr-public:GetAuthorizationToken",
+      "ecr-public:InitiateLayerUpload",
+      "ecr-public:PutImage",
+      "ecr-public:UploadLayerPart"
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    effect = "Allow"
+    actions = [
+      "s3:PutObject",
+      "s3:GetObject",
+      "s3:GetObjectVersion",
+      "s3:GetBucketAcl",
+      "s3:GetBucketLocation",
+      "s3:ListBucket"
+    ]
+    resources = [
+      "arn:aws:s3:::${var.s3_bucket_name}",
+      "arn:aws:s3:::${var.s3_bucket_name}/*",
+      "arn:aws:s3:::codepipeline-${var.aws_region}-*"
+    ]
+  }
+
+  statement {
+    effect = "Allow"
+    actions = [
+      "ecs:RegisterTaskDefinition"
+    ]
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_role_policy" "codebuild_service_role_policy" {
+  name   = "CodeBuild"
+  role   = aws_iam_role.codebuild_service_role.name
+  policy = data.aws_iam_policy_document.codebuild_service_role_policy_doc.json
+}
+
 resource "aws_codebuild_project" "mcserver-codebuild" {
   name         = "mcserver-build"
-  service_role = "arn:aws:iam::251780365797:role/service-role/codebuild-mcserver-service-role"
+  service_role = aws_iam_role.codebuild_service_role.arn
 
   environment {
     type            = "LINUX_CONTAINER"
@@ -91,7 +142,7 @@ data "aws_iam_policy_document" "lambda_execution_policy_doc_codebuild" {
   statement {
     effect    = "Allow"
     actions   = ["codebuild:StartBuild"]
-    resources = ["arn:aws:codebuild:ap-southeast-2:251780365797:project/mcserver-build"]
+    resources = [aws_codebuild_project.mcserver-codebuild.arn]
   }
 }
 

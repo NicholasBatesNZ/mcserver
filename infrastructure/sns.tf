@@ -43,7 +43,7 @@ data "aws_iam_policy_document" "codebuild_policy" {
       variable = "AWS:SourceOwner"
 
       values = [
-        "251780365797",
+        var.aws_account_id,
       ]
     }
 
@@ -64,7 +64,7 @@ data "aws_iam_policy_document" "codebuild_policy" {
     actions = [
       "SNS:Publish"
     ]
-    resources = ["arn:aws:sns:ap-southeast-2:251780365797:ServerEvents"]
+    resources = [aws_sns_topic.server_events_topic.arn]
     principals {
       type        = "Service"
       identifiers = ["codestar-notifications.amazonaws.com"]

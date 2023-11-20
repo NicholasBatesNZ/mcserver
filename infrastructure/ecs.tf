@@ -186,3 +186,18 @@ resource "aws_vpc_security_group_egress_rule" "out" {
   ip_protocol       = "-1"
   cidr_ipv4         = "0.0.0.0/0"
 }
+
+resource "aws_iam_role" "task_execution_role" {
+  name               = "TaskExecutionRoleECS"
+  assume_role_policy = data.aws_iam_policy_document.ecs_task_execution_role_trust_policy.json
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_s3_full" {
+  role       = aws_iam_role.task_execution_role.name
+  policy_arn = data.aws_iam_policy.s3_full_access.arn
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_ssm_2" {
+  role       = aws_iam_role.task_execution_role.name
+  policy_arn = data.aws_iam_policy.ec2_ssm_2.arn
+}

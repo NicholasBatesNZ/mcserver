@@ -16,7 +16,7 @@ data "aws_iam_policy_document" "github-trust-policy" {
     condition {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:NicholasBatesNZ/mcserver:*"]
+      values   = ["repo:${var.github_repo}:*"]
     }
     condition {
       test     = "StringEquals"
@@ -49,7 +49,7 @@ data "aws_iam_policy_document" "github-permissions-policy" {
   statement {
     effect    = "Allow"
     actions   = ["cloudfront:CreateInvalidation"]
-    resources = ["arn:aws:cloudfront::251780365797:distribution/${aws_cloudfront_distribution.management-distribution.id}"]
+    resources = [aws_cloudfront_distribution.management-distribution.arn]
   }
 }
 
