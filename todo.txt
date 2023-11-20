@@ -20,4 +20,5 @@ refactor
     clean up code?
 akl region
     switch to IPv6
+    upgrade to Amazon Linux 2023 (or whatever the next one will be)
     more

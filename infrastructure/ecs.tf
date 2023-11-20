@@ -117,7 +117,7 @@ resource "aws_autoscaling_notification" "scaling_notification" {
 }
 
 data "aws_ssm_parameter" "latest_ecs_ami" {
-  name = "/aws/service/ecs/optimized-ami/amazon-linux-2023/recommended/image_id"
+  name = "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id"
 }
 
 resource "aws_iam_instance_profile" "instance_profile" {
@@ -154,7 +154,8 @@ resource "aws_launch_template" "template" {
 }
 
 resource "aws_security_group" "security_group" {
-  name = "mcaccess"
+  name   = "mcaccess"
+  vpc_id = aws_vpc.vpc.id
 }
 
 resource "aws_vpc_security_group_ingress_rule" "mc_tcp" {
