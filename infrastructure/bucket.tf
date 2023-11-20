@@ -42,20 +42,6 @@ resource "aws_s3_bucket_lifecycle_configuration" "mcserver-lifecycle" {
 
     status = "Enabled"
   }
-
-  rule {
-    id = "Freeze lambda sources"
-
-    filter {
-      prefix = "lambda_sources"
-    }
-
-    noncurrent_version_expiration {
-      noncurrent_days = 1
-    }
-
-    status = "Enabled"
-  }
 }
 
 resource "aws_s3_bucket_notification" "rawfiles_notification" {

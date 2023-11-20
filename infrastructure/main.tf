@@ -1,8 +1,8 @@
 terraform {
   backend "s3" {
     region  = "ap-southeast-2"
-    bucket  = "mcserver-rawfiles"
-    key     = "terraform/terraform.tfstate"
+    bucket  = "mcserver-tf"
+    key     = "terraform.tfstate"
     encrypt = true
   }
 

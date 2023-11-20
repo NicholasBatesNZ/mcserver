@@ -1,21 +1,14 @@
-infra
-    give ryan appropriate permissions
+terraform
+    spin up test account to test things
+    certificate signing thing route 53
     better least permissions on ecs instance, task execution, codebuild service roles
-    see about moving cloudfront to other bucket with prefix permissions
     auto delete route53 record
     filter sns topic to upsert lambda if possible
+    move codebuild logs to cloudfront?
 gui web
-    button to persist running world in efs or s3
-    option to use higher ram instance
-    change to radio button layout
-    search filter
-    make cookies not expire
-    validate cookies before storing forever
-    refresh page on modal close
-    investigate websocket api gateway for (instant) service updates
-    api gateway using iam auth calling services directly
-    stretch goal cognito user pools and sts federated access to eliminate cookie need
+    decom and replace with mcplugin
 gui py
+    consider replacing with mcmod
     build for distribution
     optionally read credentials from file so aws cli isn't needed
     xero mans confusing bash script thing to run the server
@@ -25,9 +18,6 @@ refactor
     remove hardcoded values
     handle errors
     clean up code?
-terraform
-    iam roles (incl ecs task execution role), policies, etc.
-    certificate signing thing route 53
 akl region
     switch to IPv6
     more
