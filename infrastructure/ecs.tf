@@ -117,7 +117,7 @@ resource "aws_autoscaling_notification" "scaling_notification" {
 }
 
 data "aws_ssm_parameter" "latest_ecs_ami" {
-  name = "/aws/service/ecs/optimized-ami/amazon-linux-2023/recommended/image_id"
+  name = "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id"
 }
 
 resource "aws_iam_instance_profile" "instance_profile" {
@@ -147,13 +147,6 @@ resource "aws_launch_template" "template" {
   update_default_version = true
 
   user_data = base64encode("#!/bin/bash \necho ECS_CLUSTER=${aws_ecs_cluster.cluster.name} >> /etc/ecs/ecs.config;")
-
-  # block_device_mappings {
-  #   device_name = "/dev/sda1"
-  #   ebs {
-  #     volume_type = "gp2"
-  #   }
-  # }
 
   iam_instance_profile {
     arn = aws_iam_instance_profile.instance_profile.arn
