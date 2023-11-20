@@ -12,7 +12,8 @@ data "aws_iam_policy_document" "codebuild_service_role_policy_doc" {
       "ecr-public:GetAuthorizationToken",
       "ecr-public:InitiateLayerUpload",
       "ecr-public:PutImage",
-      "ecr-public:UploadLayerPart"
+      "ecr-public:UploadLayerPart",
+      "sts:GetServiceBearerToken"
     ]
     resources = ["*"]
   }

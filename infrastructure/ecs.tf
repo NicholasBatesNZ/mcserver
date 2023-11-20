@@ -148,13 +148,21 @@ resource "aws_launch_template" "template" {
 
   user_data = base64encode("#!/bin/bash \necho ECS_CLUSTER=${aws_ecs_cluster.cluster.name} >> /etc/ecs/ecs.config;")
 
+  # block_device_mappings {
+  #   device_name = "/dev/sda1"
+  #   ebs {
+  #     volume_type = "gp2"
+  #   }
+  # }
+
   iam_instance_profile {
     arn = aws_iam_instance_profile.instance_profile.arn
   }
 }
 
 resource "aws_security_group" "security_group" {
-  name = "mcaccess"
+  name   = "mcaccess"
+  vpc_id = aws_vpc.vpc.id
 }
 
 resource "aws_vpc_security_group_ingress_rule" "mc_tcp" {
