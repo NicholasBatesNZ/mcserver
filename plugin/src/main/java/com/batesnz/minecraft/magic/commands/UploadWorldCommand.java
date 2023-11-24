@@ -48,7 +48,7 @@ public class UploadWorldCommand implements CommandExecutor {
         }
 
         Bukkit.getAsyncScheduler().runNow(plugin, new UploadWorldTask(sender));
-        sender.sendMessage("Uploading...");
+        sender.sendMessage("Saving...");
         return true;
     }
 
