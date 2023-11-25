@@ -1,0 +1,11 @@
+name: MagicPlugin
+version: $version
+main: com.batesnz.minecraft.magic.Magic
+description: Magic plugin to manage the server
+website: https://github.com/nicholasbatesnz/mcserver
+api-version: 1.20
+commands:
+  uploadworld:
+    description: Overwrite the world entry with the current world state
+    usage: /<command>
+    default: op

@@ -2,7 +2,8 @@
     "html.customData": [
         "./manageServer/node_modules/@trimble-oss/modus-web-components/dist/vscode.html-custom-data.json"
     ],
-    "editor.formatOnSave": true,
+    "gradle.nestedProjects": true,
+    "python.terminal.executeInFileDir": true,
     "[terraform]": {
         "editor.defaultFormatter": "hashicorp.terraform",
         "editor.formatOnSave": false,
