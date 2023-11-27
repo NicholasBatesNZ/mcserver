@@ -1,0 +1,91 @@
+name: Validate Terraform
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+    paths:
+      - infrastructure/**
+
+jobs:
+  pr-verify-terraform:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infrastructure
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::251780365797:role/GitHubOIDC
+          role-session-name: ActionsDeploySession
+          aws-region: ap-southeast-2
+
+      - uses: hashicorp/setup-terraform@v2
+
+      - name: Check Terraform Formatting
+        id: fmt
+        continue-on-error: true
+        run: terraform fmt -check -diff
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+
+      - name: Validate terraform
+        id: validate
+        continue-on-error: true
+        run: terraform validate -no-color
+
+      - name: Terraform plan
+        id: plan
+        continue-on-error: true
+        run: terraform plan
+
+      - name: Change Summary
+        uses: marocchino/sticky-pull-request-comment@v2.3.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          hide_and_recreate: true
+          hide_classify: "OUTDATED"
+          header: Change Summary
+          message: |
+            ## [View Run #${{ github.run_number }} ](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
+            | Summary       | Result        |
+            | ------------- |:-------------:|
+            | 🚀 Run         | [View Run - ${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) |
+            | 🖌 Format and Style  | ${{ steps.fmt.outcome == 'success' && '✅' || '❌'  }}  |
+            | ⚙️ Initialization  | ${{ steps.init.outcome == 'success' && '✅' || '❌'  }} |
+            | 🤖 Validation    | ${{ steps.validate.outcome == 'success' && '✅' || '❌'  }}  ${{ steps.validate.outputs.warnings > 0 && '⚠️' || '' }}  |
+            | 📖 Plan     | ${{ steps.plan.outcome == 'success' && '✅' || '❌'  }}    |
+
+            <details><summary>🤖 Validation Output ${{ steps.validate.outputs.warnings > 0 && '⚠️' || '' }}</summary>
+
+            ```hcl
+            ${{ steps.validate.outputs.stdout }}
+            ```
+
+            </details>
+
+            #### 📖Terraform Plan - ${{ steps.plan.outcome == 'success' && '✅' || '❌'  }}
+
+            <details><summary>Show Plan</summary>
+
+            ```hcl
+            ${{ steps.plan.outcome == 'success' && steps.plan.outcome.stdout || '⚠️ Plan failed ⚠️' }}
+            ```
+            </details>
+
+            - [ ] Plan Reviewed
+
+            *Author: @${{ github.actor }}, Action: `${{ github.event_name }}`, Workflow: `${{ github.workflow }}`*
