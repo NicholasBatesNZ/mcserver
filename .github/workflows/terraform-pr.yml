@@ -53,7 +53,7 @@ jobs:
 
       - name: Terraform show
         id: show
-        if: steps.plan.conclusion == 'success'
+        if: steps.plan.outcome == 'success'
         run: |
           terraform show -no-color tfplan
 
