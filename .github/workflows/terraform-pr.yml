@@ -44,7 +44,15 @@ jobs:
       - name: Validate terraform
         id: validate
         continue-on-error: true
-        run: terraform validate -no-color
+        run: |
+          terraform validate -no-color | tee -a validate.log
+          output="$(cat validate.log)"
+          {
+            echo "stdout<<EOF"
+            echo "$output"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+          echo "warnings=$(grep -c 'warning' validate.log)" >> "$GITHUB_OUTPUT"
 
       - name: Terraform plan
         id: plan
