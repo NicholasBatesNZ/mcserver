@@ -1,7 +1,7 @@
 terraform
     spin up test account to test things
     certificate signing thing route 53
-    better least permissions on ecs instance, task execution, codebuild service roles
+    better least permissions on ecs instance, task execution, codebuild service roles, github oidc role
     auto delete route53 record
     filter sns topic to upsert lambda if possible
     move codebuild logs to cloudfront?
