@@ -5,6 +5,8 @@ terraform
     auto delete route53 record
     filter sns topic to upsert lambda if possible
     move codebuild logs to cloudfront?
+other
+    better github secret management or rotate finegrain pat by feb 25
 gui web
     decom and replace with mcplugin
 gui py
