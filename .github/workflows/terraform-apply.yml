@@ -1,0 +1,43 @@
+name: Apply Terraform
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - infrastructure/**
+
+jobs:
+  apply-terraform:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infrastructure
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::251780365797:role/GitHubOIDC
+          role-session-name: ActionsDeploySession
+          aws-region: ap-southeast-2
+
+      - uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+
+      - name: Terraform plan
+        id: plan
+        run: terraform plan -no-color -out=tfplan
+
+      - name: Terraform apply
+        id: apply
+        run: terraform apply tfplan

@@ -51,7 +51,6 @@ jobs:
         continue-on-error: true
         run: terraform plan -no-color -out=tfplan
 
-
       - name: Terraform show
         id: show
         if: steps.plan.conclusion == 'success'
