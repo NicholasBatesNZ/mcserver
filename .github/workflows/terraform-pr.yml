@@ -44,15 +44,7 @@ jobs:
       - name: Validate terraform
         id: validate
         continue-on-error: true
-        run: |
-          terraform validate -no-color | tee -a validate.log
-          output="$(cat validate.log)"
-          {
-            echo "stdout<<EOF"
-            echo "$output"
-            echo "EOF"
-          } >> "$GITHUB_OUTPUT"
-          echo "warnings=$(grep -c 'warning' validate.log)" >> "$GITHUB_OUTPUT"
+        run: terraform validate -no-color
 
       - name: Terraform plan
         id: plan
@@ -80,10 +72,10 @@ jobs:
             | 🚀 Run         | [View Run - ${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) |
             | 🖌 Format and Style  | ${{ steps.fmt.outcome == 'success' && '✅' || '❌'  }}  |
             | ⚙️ Initialization  | ${{ steps.init.outcome == 'success' && '✅' || '❌'  }} |
-            | 🤖 Validation    | ${{ steps.validate.outcome == 'success' && '✅' || '❌'  }}  ${{ steps.validate.outputs.warnings > 0 && '⚠️' || '' }}  |
+            | 🤖 Validation    | ${{ steps.validate.outcome == 'success' && '✅' || '❌'  }} |
             | 📖 Plan     | ${{ steps.plan.outcome == 'success' && '✅' || '❌'  }}    |
 
-            <details><summary>🤖 Validation Output ${{ steps.validate.outputs.warnings > 0 && '⚠️' || '' }}</summary>
+            <details><summary>🤖 Validation Output</summary>
 
             ```hcl
             ${{ steps.validate.outputs.stdout }}
