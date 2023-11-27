@@ -25,7 +25,7 @@ resource "aws_lambda_function" "change_instance" {
 }
 
 resource "aws_cloudwatch_event_rule" "param_change" {
-  name = "SSM Parameter Change"
+  name = "SSMParameterChange"
   event_pattern = jsonencode({
     source      = ["aws.ssm"]
     detail-type = ["Parameter Store Change"]
