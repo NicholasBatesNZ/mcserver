@@ -1,10 +1,13 @@
 terraform
     spin up test account to test things
+    fix pr workflow when validation fails
     certificate signing thing route 53
-    better least permissions on ecs instance, task execution, codebuild service roles
+    better least permissions on ecs instance, task execution, codebuild service roles, github oidc role
     auto delete route53 record
     filter sns topic to upsert lambda if possible
     move codebuild logs to cloudfront?
+other
+    better github secret management or rotate finegrain pat by feb 25
 gui web
     decom and replace with mcplugin
 gui py
