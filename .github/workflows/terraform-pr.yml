@@ -49,24 +49,14 @@ jobs:
       - name: Terraform plan
         id: plan
         continue-on-error: true
-        run: terraform plan -no-color
+        run: terraform plan -no-color -out=tfplan
 
 
       - name: Terraform show
         id: show
         if: steps.plan.conclusion == 'success'
         run: |
-          terraform show -no-color tfplan | tee -a plan.log
-          {
-            echo "PLAN<<EOF" 
-            head -c 100000 plan.log 
-            file_size=$(wc -m < "plan.log")
-            if [ "$file_size" -gt 100000 ]
-            then
-              printf "\n\n ... Source truncated due to length - please check logs ... \n\n"
-            fi
-            echo "EOF" 
-          } >> "$GITHUB_ENV"
+          terraform show -no-color tfplan
 
       - name: Change Summary
         uses: marocchino/sticky-pull-request-comment@v2.3.1
@@ -99,7 +89,7 @@ jobs:
             <details><summary>Show Plan</summary>
 
             ```hcl
-            ${{ steps.plan.outcome == 'success' && env.PLAN || '⚠️ Plan failed ⚠️' }}
+            ${{ steps.plan.outcome == 'success' && steps.show.outputs.stdout || '⚠️ Plan failed ⚠️' }}
             ```
             </details>
 
