@@ -37,7 +37,7 @@ resource "aws_cloudwatch_event_target" "param_change_target" {
   arn  = aws_lambda_function.change_instance.arn
 }
 
-resource "aws_lambda_permission" "codebuild_lambda_allow_bucket" {
+resource "aws_lambda_permission" "change_instance_lambda_allow_eventbridge" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.change_instance.arn
   principal     = "events.amazonaws.com"
