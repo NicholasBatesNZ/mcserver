@@ -4,6 +4,10 @@ data "archive_file" "discord_lambda_source_zip" {
   output_path = "lambda_sources/discordWebhook.zip"
 }
 
+data "aws_ssm_parameter" "discord_webhook" {
+  name = "discord-webhook"
+}
+
 resource "aws_lambda_function" "send_discord_webhook" {
   function_name    = "SNSDiscordWebhook"
   runtime          = "nodejs18.x"
@@ -14,7 +18,7 @@ resource "aws_lambda_function" "send_discord_webhook" {
 
   environment {
     variables = {
-      WEBHOOK_DISCORD = var.discord_webhook
+      WEBHOOK_DISCORD = data.aws_ssm_parameter.discord_webhook.value
     }
   }
 }

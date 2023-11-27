@@ -116,10 +116,6 @@ resource "aws_autoscaling_notification" "scaling_notification" {
   topic_arn = aws_sns_topic.scaling_events_topic.arn
 }
 
-data "aws_ssm_parameter" "latest_ecs_ami" {
-  name = "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id"
-}
-
 resource "aws_iam_instance_profile" "instance_profile" {
   name = "InstanceProfileECS"
   role = aws_iam_role.instance_role.name
@@ -140,8 +136,16 @@ resource "aws_iam_role_policy_attachment" "ecs_ssm" {
   policy_arn = data.aws_iam_policy.ec2_ssm.arn
 }
 
+data "aws_ssm_parameter" "instance_type" {
+  name = "instance-type"
+}
+
+data "aws_ssm_parameter" "latest_ecs_ami" {
+  name = "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id"
+}
+
 resource "aws_launch_template" "template" {
-  instance_type          = "t3.medium"
+  instance_type          = nonsensitive(data.aws_ssm_parameter.instance_type.value)
   image_id               = nonsensitive(data.aws_ssm_parameter.latest_ecs_ami.value)
   vpc_security_group_ids = [aws_security_group.security_group.id]
   update_default_version = true

@@ -61,3 +61,7 @@ data "aws_iam_policy" "s3_full_access" {
 data "aws_iam_policy" "ec2_ssm_2" {
   arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
 }
+
+data "aws_iam_policy" "admin_access" {
+  arn = "arn:aws:iam::aws:policy/AdministratorAccess"
+}
