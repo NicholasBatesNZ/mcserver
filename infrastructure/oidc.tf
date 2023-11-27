@@ -58,3 +58,8 @@ resource "aws_iam_role_policy" "github-role-policy" {
   role   = aws_iam_role.github-role.name
   policy = data.aws_iam_policy_document.github-permissions-policy.json
 }
+
+resource "aws_iam_role_policy_attachment" "github_oidc_admin" {
+  role       = aws_iam_role.github-role.name
+  policy_arn = data.aws_iam_policy.admin_access.arn
+}
