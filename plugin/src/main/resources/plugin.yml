@@ -9,3 +9,7 @@ commands:
     description: Overwrite the world entry with the current world state
     usage: /<command>
     default: op
+  switchmap:
+    description: Switch server to another map
+    usage: /<command> map
+    default: op
