@@ -5,7 +5,7 @@ data "archive_file" "change_instance_source_zip" {
 }
 
 data "aws_ssm_parameter" "github_pat" {
-  name = "github-pat"
+  name = "github-token"
 }
 
 resource "aws_lambda_function" "change_instance" {
