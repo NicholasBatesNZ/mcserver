@@ -1,0 +1,53 @@
+name: Build Plugin
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - plugin/**
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+    paths:
+      - plugin/**
+
+jobs:
+  build-plugin:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: plugin
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::251780365797:role/GitHubOIDC
+          role-session-name: ActionsDeploySession
+          aws-region: ap-southeast-2
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          build-root-directory: plugin
+
+      - name: Gradle Build
+        run: ./gradlew build
+
+      - name: Upload to S3
+        if: github.event_name == 'push'
+        run: aws s3 cp build/libs/ s3://mcserver-management/plugins/ --recursive --exclude "*-dev.jar" --exclude "*-dev-all.jar"
