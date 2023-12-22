@@ -1,14 +1,11 @@
 import os
 import boto3
 
+TASK_ROLE_ARN = os.environ['TASK_ROLE_ARN']
 CLUSTER = "DevCluster"
 
 
 def lambda_handler(event, context):
-    task_definition = event["taskDefinition"]
-    task_role = os.environ['taskRoleArn']
-
-
     ssm = boto3.client("ssm")
     instance_type = ssm.get_parameter(
         Name="instance-type"
@@ -34,9 +31,9 @@ def lambda_handler(event, context):
 
     ecs.run_task(
         cluster=CLUSTER,
-        task_definition=task_definition,
+        task_definition=event["taskDefinition"],
         overrides={
-            "taskRoleArn": task_role,
+            "taskRoleArn": TASK_ROLE_ARN,
             "containerOverrides": [{
                 "name": "mcserver",
                 "memory": memory,
