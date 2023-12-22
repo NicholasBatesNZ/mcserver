@@ -17,6 +17,8 @@ dependencies {
 
     implementation(platform("software.amazon.awssdk:bom:2.21.1"))
     implementation("software.amazon.awssdk:s3")
+    implementation("software.amazon.awssdk:resourcegroupstaggingapi")
+    implementation("software.amazon.awssdk:lambda")
 
     implementation("net.lingala.zip4j:zip4j:2.11.5")
 }

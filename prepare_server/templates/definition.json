@@ -1,11 +1,11 @@
 {
   "family": "",
   "networkMode": "host",
-  "memory": "3072",
   "containerDefinitions": [
     {
       "name": "mcserver",
       "image": "",
+      "memory": 4096,
       "portMappings": [
         {
           "containerPort": 25565,
